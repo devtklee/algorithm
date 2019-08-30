@@ -14,6 +14,7 @@ public class SparseArrays {
     static int[] matchingStrings(String[] strings, String[] queries) {
 
         int [] resultVal = new int [queries.length];
+        Map<String, Integer> stringMap = new HashMap<String, Integer>();
 
         for (int sidx = 0; sidx < strings.length; sidx++){
 
@@ -25,13 +26,33 @@ public class SparseArrays {
             }
             */
 
+            /* This solution is O(n^2)
             for (int qidx = 0; qidx < queries.length; qidx++){
 
                 if(strings[sidx].equals(queries[qidx])){
                     resultVal[qidx] += 1;
                 }
             }
+            */
+
+            if (stringMap.containsKey(strings[sidx])){
+                stringMap.put(strings[sidx], stringMap.get(strings[sidx])+1 );
+            } else {
+                stringMap.put(strings[sidx], 1);
+            }
         }
+
+
+        for( int i = 0; i <queries.length; i++){
+
+            if(stringMap.containsKey(queries[i])){
+                resultVal[i] = stringMap.get(queries[i]);
+            } else {
+                resultVal[i] = 0;
+            }
+
+        }
+
 
         return resultVal;
 
