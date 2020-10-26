@@ -1,3 +1,5 @@
+package com.HackerRank;
+
 import java.util.Scanner;
 
 public class DiagonalDifference {

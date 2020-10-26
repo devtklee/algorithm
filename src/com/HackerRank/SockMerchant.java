@@ -1,4 +1,4 @@
-package com.challenges;
+package com.HackerRank;
 
 import java.io.*;
 import java.math.*;

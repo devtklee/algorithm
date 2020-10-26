@@ -1,4 +1,4 @@
-package dataStructureAlgorithmQuestions;
+package com.HackerRank;
 
 import java.io.*;
 import java.util.*;
