@@ -1,4 +1,10 @@
+package com.LeetCode;
+
+
+import java.util.Arrays;
+
 public class BagOfToken {
+
     /*
 
     LeetCode Algorithm Question - Bag of Tokens Solution
@@ -20,81 +26,52 @@ public class BagOfToken {
     Return the largest possible score you can achieve after playing any number of tokens.
      */
 
+        public static int bagOfTokensScore(int[] tokens, int P)
+        {
+            //Variable Initialization
+            int[] tokenList = tokens.clone();
+            int power = P;
+            int maxScore = 0;
+            int score = 0;
+            int curPower = power;
+            int left = 0;
+            int right = tokenList.length -1;
 
+            //Array Token List
+            Arrays.sort(tokenList);
 
-    public static int bagOfTokensScore(int[] tokens, int p)
-    {
-        //Variable Initialization
-        int[] tokenList = tokens.clone();
-        int power = p;
-        int score = 0;
-        int curPower = power;
-        int tmp =0;
-        int left = 0;
-        int right = tokenList.length -1;
+            while (right >= left) {
 
-        //Sort Array List
-        for (int idx=0; idx < tokenList.length; idx++ ) {
-            for (int next_idx=idx; next_idx < tokenList.length; next_idx++)
-            {
-                if (tokenList[idx] >= tokenList[next_idx]) {
-                    tmp = tokenList[idx];
-                    tokenList[idx] = tokenList[next_idx];
-                    tokenList[next_idx] = tmp;
+                //If Power >= Token, subtract token amount from power to again score.
+                if (curPower >= tokenList[left]){
+                    score++;
+                    curPower -= tokenList[left++];
+
+                    //Keep Maximized scores
+                    maxScore = Math.max(maxScore, score);
+
+                } else if (score >0)  {
+                    score--;
+                    curPower += tokenList[right--];
+
+                } else {
+                    return maxScore;
                 }
-            }
+            } ;
+
+            return maxScore;
         }
 
-        while (right != left) {
+        public static void main(String[] args){
 
-            System.out.println ("Current Pointer : ");
-            System.out.println("Right : " + right);
-            System.out.println("Left : " + left + "\n");
+            int[] tokens = {81,91,31};
+            int p = 73;
+            int score = 0;
 
-            //If Power is less then any of token, return current score;
-            if (tokenList[left] > curPower && (tokenList[right]) < curPower){
-                return score;
-            }
+            score = bagOfTokensScore(tokens, p);
 
-            //Face Up
-            if (tokenList[left] <= curPower){
-                score++;
-                curPower -= tokenList[left];
-                left++;
+            System.out.println("Score: " + score);
 
-                print("UP", score, curPower);
-            } else if ((tokenList[right]) >= curPower && score >0) {
-                score--;
-                curPower += tokenList[right];
-                right--;
-
-                print("DOWN", score, curPower);
-
-            }
-
-        } ;
-
-        return score;
+        }
     }
-
-    static void print(String pt, int s, int p){
-        System.out.println("Move : " + pt);
-        System.out.println("Score : " + s);
-        System.out.println("Power : " + p);
-        System.out.println("");
-    }
-
-
-    public static void main(String[] args){
-
-        int[] tokens = {100,200,300,400};
-        int p = 200;
-        int score = 0;
-
-        score = bagOfTokensScore(tokens, p);
-
-        System.out.println(score);
-
-    }
-}
 
