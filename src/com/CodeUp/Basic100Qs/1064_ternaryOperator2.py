@@ -2,7 +2,7 @@
 Code Up - Algorithm Basic - 100 Questions
 
 [기초-삼향연산] 1064 Ternary Operator
-https://codeup.kr/problem.php?id=1063
+https://codeup.kr/problem.php?id=1064
 
 Date : 2021-01-30
 Solved BY : TK Lee
