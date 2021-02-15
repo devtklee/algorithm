@@ -26,16 +26,11 @@ winter
 '''
 m = int(input())
 
-
-def calendar(m):
-    swticher = {
-        12 | 1 | 2: "winter",
-        1: 12,
-        (3, 4, 5): "spring",
-        (6, 7, 8): "summer",
-        (9, 10, 11): "fall",
-    }
-    return swticher.get(m, "unknown")
-
-
-print(calendar(m))
+if (m == 12 or m == 1 or m == 2):
+    print("winter")
+elif (m >= 3 and m < 6):
+    print("spring")
+elif (m >= 6 and m < 9):
+    print("summer")
+elif (m >= 9 and m < 12):
+    print("fall")
