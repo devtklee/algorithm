@@ -1,30 +1,33 @@
-package com.LeetCode.Top_Interview_Questions;
+package com.LeetCode.Top_Interview_Questions.Array;
 
 public class RotateArray {
 
     
     public static void rotate (int[] nums, int k){
 
-        int[] rotated = nums.clone();
-        int curpos=k;
-
-        for (int idx=0; idx<nums.length; idx++){
+        int[] rot = nums.clone();
+        int pos=k;
+        int numSize = nums.length;
+        
+        for (int j=0; j<numSize; j++){
             
-            curpos++;
+            pos=k+j;
             
-            if(curpos >= nums.length){
-                curpos=0;
-            } 
-            nums[idx]=rotated[curpos];
+            if(pos>=numSize){
+                pos=Math.abs(numSize-pos);
+            }
+            nums[pos]=rot[j];
         }
 
         toString(nums);
     }
 
     public static void toString (int[] nums){
+        System.out.print("\n[");
         for(int c=0; c<nums.length; c++){
-            System.out.print(nums[c]);
+            System.out.print(nums[c]+ " ") ;
          }
+         System.out.print("]\n");
     }
 
     public static void main (String[] args){
@@ -35,6 +38,7 @@ public class RotateArray {
         int [] nums2 = {-1,-100,3,99};
         int k2=2;
         
+        toString(nums2);
          //rotate(nums, k);
          rotate(nums2, k2);
        
