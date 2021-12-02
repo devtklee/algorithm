@@ -1,9 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /* --- Day 1: Sonar Sweep ---
-You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help. Apparently, one of the Elves tripped and accidentally sent the sleigh keys flying into the ocean!
+Part 1 : You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help. Apparently, one of the Elves tripped and accidentally sent the sleigh keys flying into the ocean!
 Before you know it, you're inside a submarine the Elves keep ready for situations like this. It's covered in Christmas lights (because of course it is), and it even has an experimental antenna that should be able to track the keys if you can boost its signal strength high enough; there's a little meter that indicates the antenna's signal strength by displaying 0-50 stars.
 Your instincts tell you that in order to save Christmas, you'll need to get all fifty stars by December 25th.
 Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
@@ -38,9 +39,65 @@ To do this, count the number of times a depth measurement increases from the pre
 
 In this example, there are 7 measurements that are larger than the previous measurement.
 How many measurements are larger than the previous measurement?
-To play, please identify yourself via one of these services: */
+To play, please identify yourself via one of these services: 
+
+======================
+
+Part 2 : Considering every single measurement isn't as useful as you expected: there's just too much noise in the data.
+
+Instead, consider sums of a three-measurement sliding window. Again considering the above example:
+
+199  A      
+200  A B    
+208  A B C  
+210    B C D
+200  E   C D
+207  E F   D
+240  E F G  
+269    F G H
+260      G H
+263        H
+Start by comparing the first and second three-measurement windows. The measurements in the first window are marked A (199, 200, 208); their sum is 199 + 200 + 208 = 607. The second window is marked B (200, 208, 210); its sum is 618. The sum of measurements in the second window is larger than the sum of the first, so this first comparison increased.
+
+Your goal now is to count the number of times the sum of measurements in this sliding window increases from the previous sum. So, compare A with B, then compare B with C, then C with D, and so on. Stop when there aren't enough measurements left to create a new three-measurement sum.
+
+In the above example, the sum of each three-measurement window is as follows:
+
+A: 607 (N/A - no previous sum)
+B: 618 (increased)
+C: 618 (no change)
+D: 617 (decreased)
+E: 647 (increased)
+F: 716 (increased)
+G: 769 (increased)
+H: 792 (increased)
+In this example, there are 5 sums that are larger than the previous sum.
+
+Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?*/
 
 public class SonarSweep {
+
+    public static int GetNumOfIncreasedSumOfThreeMeasure (ArrayList<Integer> numbers){
+        int sum=0;
+        int prevSum=0;
+        int idx=0;
+        int cnt=0;
+        int arrayLen=numbers.size();
+
+        while(idx<arrayLen-2){
+            //System.out.println ("Current Idx : " + idx);
+            sum=numbers.get(idx)+numbers.get(idx+1)+numbers.get(idx+2);
+            //System.out.println("Sum of " + numbers.get(idx) + ", " + numbers.get(idx+1) + ", " + numbers.get(idx+2) + " = " + sum);
+            if(prevSum!=0 && prevSum < sum){
+                cnt++;
+            }
+            prevSum= sum;
+            idx++;
+        }
+
+        return cnt;
+
+    }
 
     public static void main(String[] args){
 
@@ -48,12 +105,15 @@ public class SonarSweep {
         int prevDept=0;
         File myFile = new File("C:/git_workspace/algorithm/src/com/AdventOfCode/2021/inputfiles/input.txt");
         Scanner sc;
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
 
         try {
 
+            
             sc = new Scanner (myFile);
             while(sc.hasNextInt()){
                 int curDept=sc.nextInt();
+                numbers.add(curDept);
                 if(prevDept!=0 && prevDept < curDept){
                     upCount++;
                 }
@@ -64,9 +124,9 @@ public class SonarSweep {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } 
-        
-        System.out.println(upCount);
 
+        System.out.println("Total number of Increase : " + upCount);
+        System.out.println("Total number of Increased sum of three measures : " + GetNumOfIncreasedSumOfThreeMeasure(numbers));
     }
 
 }
